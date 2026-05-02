@@ -1,5 +1,5 @@
 import { Language, translations } from '../translations';
-import { Instagram, Facebook, Mail, MapPin, Phone, Music2 } from 'lucide-react';
+import { Instagram, Facebook, MapPin, Music2 } from 'lucide-react';
 
 interface FooterProps {
   lang: Language;
@@ -28,33 +28,26 @@ export default function Footer({ lang }: FooterProps) {
             </p>
           </div>
 
-          {/* Contact */}
+          {/* Find us */}
           <div>
             <h4 className="text-xs font-bold text-white/50 mb-6 uppercase tracking-widest">
-              {t.contact}
+              {lang === 'he' ? 'מצאו אותנו' : 'Find us'}
             </h4>
-            <div className="flex flex-col gap-4">
-              <a
-                href="tel:054-000-0000"
-                className="flex items-center gap-3 text-white/75 hover:text-brand-yellow transition-colors text-sm"
-                dir="ltr"
-              >
-                <Phone size={14} className="text-brand-yellow flex-shrink-0" />
-                054-000-0000
-              </a>
-              <a
-                href="mailto:hello@mnnm.co.il"
-                className="flex items-center gap-3 text-white/75 hover:text-brand-yellow transition-colors text-sm"
-                dir="ltr"
-              >
-                <Mail size={14} className="text-brand-yellow flex-shrink-0" />
-                hello@mnnm.co.il
-              </a>
-              <div className="flex items-center gap-3 text-white/75 text-sm">
-                <MapPin size={14} className="text-brand-yellow flex-shrink-0" />
-                {lang === 'he' ? 'ראשון לציון, ישראל' : 'Rishon Lezion, Israel'}
-              </div>
+            <div className="flex items-start gap-3 text-white/75 text-sm leading-relaxed">
+              <MapPin size={14} className="text-brand-yellow flex-shrink-0 mt-0.5" />
+              <span>
+                {lang === 'he' ? (
+                  <>הדולב 4<br />חרב לאת</>
+                ) : (
+                  <>HaDolev 4<br />Harav L'at, Israel</>
+                )}
+              </span>
             </div>
+            <p className="mt-4 text-xs text-white/45 leading-relaxed max-w-[220px]">
+              {lang === 'he'
+                ? 'הרכב מגיע אלינו. אנחנו לא מגיעים עד הבית.'
+                : "Drive in to us — we don't do home pickups."}
+            </p>
           </div>
 
           {/* Social */}

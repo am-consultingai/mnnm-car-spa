@@ -8,7 +8,7 @@ export const translations = {
       why: 'למה ידני',
       tech: 'הטכנולוגיה',
       pricing: 'מחירים',
-      team: 'האחים',
+      team: 'הצוות',
       book: 'הזמנת תור',
       cta: 'הזמנת תור — 15 ₪',
     },
@@ -16,7 +16,7 @@ export const translations = {
       title: 'מננם ספא רכב — הרחיצה הכי אנושית בעיר.',
       sub: 'רחיצה ידנית, לא אוטומטית. רק 15 ₪. הזמינו תור היום.',
       cta: 'הזמן תור עכשיו',
-      micro: '10% מכל רחיצה נתרמים לחיילי מילואים ולקהילה.',
+      micro: '10% מכל רחיצה חוזרים לקהילה.',
     },
     why: {
       title: 'למה ידני?',
@@ -67,7 +67,7 @@ export const translations = {
     pricing: {
       eyebrow: 'מחיר אחד. רחיצה אחת. בלי הפתעות.',
       price: '15 ₪',
-      sub: 'רחיצה חיצונית ידנית מלאה',
+      sub: 'רחיצה ידנית מלאה',
       includes: [
         'שטיפה ידנית מלאה',
         'ניקוי חישוקים',
@@ -76,40 +76,40 @@ export const translations = {
         'ריח טוב במתנה',
       ],
       cta: 'הזמן עכשיו',
-      notes: 'פנים הרכב? נשמח להציע — נדבר על זה כשמזמינים.',
+      notes: 'מחיר אחד, גלוי וברור. הכל כלול בכרטיס.',
     },
     team: {
-      title: 'שלושה אחים. דלי אחד. רכב נקי.',
+      title: 'שני אחים ואחות. דלי אחד. רכב נקי.',
       subtitle: 'התחלנו את מננם כי האמנו שאפשר לעשות את זה אחרת — בידיים, בכבוד, ובמחיר שכל אחד יכול להרשות לעצמו.',
       members: [
         {
           name: 'מתן',
-          desc: 'האח הגדול. אחראי על המים, על המוזיקה, ועל זה שכולם מגיעים בזמן.',
+          desc: 'האחות הגדולה. אחראית על המים, על המוזיקה, ועל זה שכולם מגיעים בזמן.',
         },
         {
-          name: 'נועם',
-          desc: 'המוח של הציוד. אם זה מבריק — נועם בחר את החומר.',
+          name: 'נעם',
+          desc: 'המוח של הציוד. אם זה מבריק — נעם בחר את החומר.',
         },
         {
           name: 'נטע',
-          desc: 'לא נחה עד שהרכב נראה טוב יותר משיצא מהסוכנות.',
+          desc: 'לא נח עד שהרכב נראה טוב יותר משיצא מהסוכנות.',
         },
       ],
     },
     how: {
       steps: [
         { title: 'הזמנה', body: 'בוחרים יום ושעה באתר. שתי דקות.' },
-        { title: 'הגעה', body: 'מגיעים אלינו (או אנחנו אליכם, לפי תיאום).' },
+        { title: 'הגעה', body: 'מגיעים אלינו לכתובת — הדולב 4, חרב לאת.' },
         { title: 'ספא', body: '20–30 דקות של טיפול ידני. ניתן להמתין במקום עם קפה.' },
-        { title: 'נסיעה', body: 'רכב נקי, וגם תרומה לחייל מילואים. שניים בתוך אחד.' },
+        { title: 'נסיעה', body: 'רכב נקי, וגם תרומה לקהילה. שניים בתוך אחד.' },
       ],
     },
     testimonials: {
       title: 'מה אומרים עלינו',
       items: [
         { text: 'הזמנתי בספק, יצאתי משוכנעת. 15 שקל, באמת. לא מבינה איך הם עושים את זה.', author: 'דנה, ראשון לציון' },
-        { text: 'האחים הכי נחמדים בענף. הרכב מבריק כמו חדש.', author: 'איתי, חולון' },
-        { text: 'תרמתי לחיילים בלי לדעת שתרמתי. גאון.', author: 'שירן, באר יעקב' },
+        { text: 'הצוות הכי נחמד בענף. הרכב מבריק כמו חדש.', author: 'איתי, חולון' },
+        { text: 'תרמתי לקהילה בלי לדעת שתרמתי. גאון.', author: 'שירן, באר יעקב' },
       ],
     },
     faq: {
@@ -117,8 +117,8 @@ export const translations = {
       items: [
         { q: 'האם 15 ₪ זה באמת המחיר הסופי?', a: 'כן. בלי תוספות מפתיעות.' },
         { q: 'כמה זמן לוקחת רחיצה?', a: 'בין 20 ל-30 דקות, תלוי במצב הרכב.' },
-        { q: 'מה לגבי פנים הרכב?', a: 'ניתן להוסיף ניקוי פנימי בתיאום מראש.' },
-        { q: 'איך עובדת התרומה לחיילי מילואים?', a: '10% מכל תשלום עוברים ישירות לרכישת ציוד תומך לחימה.' },
+        { q: 'איפה אתם נמצאים?', a: 'הדולב 4, חרב לאת. אנחנו לא מגיעים עד הבית — הרכב מגיע אלינו.' },
+        { q: 'איך עובדת התרומה לקהילה?', a: '10% מכל תשלום עוברים ישירות לעמותות קהילתיות באזור שלנו.' },
       ],
     },
     booking: {
@@ -130,14 +130,14 @@ export const translations = {
       time: 'שעה מועדפת',
       notes: 'הערות',
       submit: 'אישור הזמנה — 15 ₪',
-      success: 'תודה! קיבלנו את ההזמנה. נשלח אישור בוואטסאפ תוך כמה דקות. נתראה בקרוב — מתן, נעם ונטע.',
-      trust1: 'אישור מיידי בוואטסאפ',
+      success: 'תודה! קיבלנו את ההזמנה. אישור יישלח אליכם תוך כמה דקות. נתראה בקרוב — מתן, נעם ונטע.',
+      trust1: 'אישור הזמנה מיידי',
       trust2: 'ביטול חינם עד שעתיים לפני',
-      trust3: '10% מהסכום נתרם לקהילה',
+      trust3: '10% מהסכום חוזר לקהילה',
     },
     charity: {
       title: '10% מכל רחיצה — חוזר לקהילה.',
-      body1: 'במננם אנחנו מאמינים שעסק טוב הוא עסק שמשאיר את הסביבה שלו טובה יותר ממה שמצא אותה. לכן, מכל רחיצה — 15 ₪ או יותר — עשרה אחוז נתרמים ישירות לרכש ציוד עבור חיילי מילואים, ולעמותות קהילתיות בסביבה שלנו.',
+      body1: 'במננם אנחנו מאמינים שעסק טוב הוא עסק שמשאיר את הסביבה שלו טובה יותר ממה שמצא אותה. לכן, מכל רחיצה — 15 ₪ או יותר — עשרה אחוז נתרמים ישירות לעמותות קהילתיות בסביבה שלנו.',
       body2: 'לא קופון. לא הנחה. לא "תרומה אם תרצו". פשוט חלק מהמחיר — שנכנס לארגזים של מי שצריך.',
       body3: 'אם אתם רוצים לדעת לאן הלך הכסף החודש, נשמח לשלוח לכם דוח קצר במייל. שקיפות מלאה, כי ככה זה צריך להיות.',
       cta: 'לקבלת הדוח החודשי במייל',
@@ -160,7 +160,7 @@ export const translations = {
       why: 'Why Manual',
       tech: 'Technology',
       pricing: 'Pricing',
-      team: 'The Brothers',
+      team: 'The Crew',
       book: 'Book Appointment',
       cta: 'Book — 15 ₪',
     },
@@ -168,7 +168,7 @@ export const translations = {
       title: 'MNNM Car Spa — the most human wash in town.',
       sub: 'Done by hand, not by machine. Just 15 NIS. Book your appointment today.',
       cta: 'Book now',
-      micro: '10% of every wash funds gear for reserve soldiers.',
+      micro: '10% of every wash goes back to the community.',
     },
     why: {
       title: 'Why by hand?',
@@ -219,7 +219,7 @@ export const translations = {
     pricing: {
       eyebrow: 'One price. One wash. No surprises.',
       price: '15 ₪',
-      sub: 'Full hand-wash, exterior.',
+      sub: 'Full hand wash.',
       includes: [
         'Full hand wash',
         'Wheel & rim clean',
@@ -228,15 +228,15 @@ export const translations = {
         'Free fresh-car scent',
       ],
       cta: 'Book Now',
-      notes: 'Interior detail available — ask when you book.',
+      notes: 'One price, plain and clear. Everything is on the card.',
     },
     team: {
-      title: 'Three brothers. One bucket. One clean car.',
+      title: 'Two brothers, one sister. One bucket. One clean car.',
       subtitle: 'We started MNNM because we believed it could be done differently — with our hands, with respect, and at a price everyone can afford.',
       members: [
         {
           name: 'Matan',
-          desc: 'The big brother. In charge of the water, the playlist, and making sure everyone shows up on time.',
+          desc: 'The big sister. In charge of the water, the playlist, and making sure everyone shows up on time.',
         },
         {
           name: 'Noam',
@@ -244,24 +244,24 @@ export const translations = {
         },
         {
           name: 'Neta',
-          desc: "Doesn't rest until the car looks better than it did at the dealership.",
+          desc: "Won't stop until the car looks better than it did at the dealership.",
         },
       ],
     },
     how: {
       steps: [
         { title: 'Book', body: 'Pick a slot online. Takes two minutes.' },
-        { title: 'Arrive', body: 'Drive in — or we come to you, by arrangement.' },
+        { title: 'Arrive', body: 'Drive in to our spot — HaDolev 4, Harav L\'at.' },
         { title: 'Spa', body: '20–30 minutes of hand care. Coffee while you wait.' },
-        { title: 'Drive Away', body: 'A clean car — and a small gift to a reserve soldier. Two wins in one.' },
+        { title: 'Drive Away', body: 'A clean car — and a small gift back to the community. Two wins in one.' },
       ],
     },
     testimonials: {
       title: 'What people say',
       items: [
         { text: "I was skeptical, but left convinced. 15 NIS, really. I don't know how they do it.", author: 'Dana, Rishon Lezion' },
-        { text: 'The nicest brothers in the business. The car shines like new.', author: 'Itai, Holon' },
-        { text: 'Donated to soldiers without even knowing I did. Genius.', author: 'Shiran, Be\'er Ya\'akov' },
+        { text: 'The nicest crew in the business. The car shines like new.', author: 'Itai, Holon' },
+        { text: 'Donated to the community without even knowing I did. Genius.', author: 'Shiran, Be\'er Ya\'akov' },
       ],
     },
     faq: {
@@ -269,8 +269,8 @@ export const translations = {
       items: [
         { q: 'Is 15 ₪ really the final price?', a: 'Yes. No surprise add-ons.' },
         { q: 'How long does a wash take?', a: 'Between 20 to 30 minutes, depending on the car condition.' },
-        { q: 'What about the interior?', a: 'Interior cleaning can be added by prior arrangement.' },
-        { q: 'How does the donation to reserve soldiers work?', a: '10% of every payment goes directly to purchasing support equipment.' },
+        { q: 'Where are you located?', a: 'HaDolev 4, Harav L\'at. We don\'t do home pickups — drive in to us.' },
+        { q: 'How does the donation to the community work?', a: '10% of every payment goes directly to local community organizations.' },
       ],
     },
     booking: {
@@ -282,14 +282,14 @@ export const translations = {
       time: 'Preferred Time',
       notes: 'Notes',
       submit: 'Confirm Booking — 15 ₪',
-      success: 'Thanks! We received your booking. We will send a WhatsApp confirmation in a few minutes. See you soon — Matan, Noam, and Neta.',
-      trust1: 'Instant WhatsApp confirmation',
+      success: 'Thanks! We received your booking. We will get back to you in a few minutes. See you soon — Matan, Noam, and Neta.',
+      trust1: 'Instant booking confirmation',
       trust2: 'Free cancellation up to 2 hours before',
       trust3: '10% of every wash goes back to the community',
     },
     charity: {
       title: '10% of every wash goes back to the community.',
-      body1: 'At MNNM we believe a good business leaves its surroundings better than it found them. So 10% of every single wash — 15 ₪ or more — goes directly to buying gear for reserve-duty soldiers and to local community organizations.',
+      body1: 'At MNNM we believe a good business leaves its surroundings better than it found them. So 10% of every single wash — 15 ₪ or more — goes directly to local community organizations.',
       body2: 'Not a coupon. Not a discount. Not "if you\'d like to round up". Just part of the price — that goes into boxes for those who need it.',
       body3: 'Want to know where this month\'s money went? We\'ll send you a short transparency note by email. That\'s how it should work.',
       cta: 'Get the monthly report by email',
