@@ -1,13 +1,16 @@
 import { motion } from 'motion/react';
 import { Language, translations } from '../translations';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface HeroProps {
   lang: Language;
+  price: number;
+  currency: string;
+  onBook: () => void;
 }
 
-export default function Hero({ lang }: HeroProps) {
+export default function Hero({ lang, price, currency, onBook }: HeroProps) {
   const t = translations[lang].hero;
 
   return (
@@ -21,7 +24,7 @@ export default function Hero({ lang }: HeroProps) {
         poster={`${import.meta.env.BASE_URL}clean.png`}
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={`${import.meta.env.BASE_URL}car_wash.mp4`} type="video/mp4" />
+        <source src={`${import.meta.env.BASE_URL}founders_wash.mp4`} type="video/mp4" />
       </video>
 
       {/* Cinematic overlay: dark at top + bottom for legibility, video shows through the middle */}
@@ -45,8 +48,9 @@ export default function Hero({ lang }: HeroProps) {
           transition={{ duration: 0.7 }}
           className="max-w-4xl"
         >
-          <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-6 inline-block">
-            {lang === 'he' ? 'שטיפת רכב ידנית · ישראל' : 'Hand-wash car spa · Israel'}
+          <span className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-brand-yellow/15 border border-brand-yellow/40 rounded-full text-brand-yellow text-sm md:text-base font-bold backdrop-blur-sm shadow-lg shadow-brand-yellow/10">
+            <Sparkles size={14} strokeWidth={2.5} />
+            {t.foundersBadge}
           </span>
 
           <h1 className={cn(
@@ -72,8 +76,9 @@ export default function Hero({ lang }: HeroProps) {
           </p>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-            <a
-              href="#booking"
+            <button
+              type="button"
+              onClick={onBook}
               className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-2xl shadow-brand-yellow/20 rounded-sm"
             >
               {t.cta}
@@ -85,7 +90,7 @@ export default function Hero({ lang }: HeroProps) {
                 size={18}
                 strokeWidth={2.5}
               />
-            </a>
+            </button>
 
             <a
               href="#how"
@@ -101,7 +106,7 @@ export default function Hero({ lang }: HeroProps) {
               <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
                 {lang === 'he' ? 'מחיר' : 'Price'}
               </p>
-              <p className="text-2xl md:text-3xl font-bold font-display text-white">15 ₪</p>
+              <p className="text-2xl md:text-3xl font-bold font-display text-white">{price} {currency}</p>
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
