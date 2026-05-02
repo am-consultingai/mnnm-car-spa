@@ -13,11 +13,20 @@ import Booking from './components/Booking';
 import Charity from './components/Charity';
 import Footer from './components/Footer';
 
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
+const HE_PATH = `${BASE}/`;
+const EN_PATH = `${BASE}/en`;
+
+const detectLang = (): Language => {
+  const path = window.location.pathname;
+  return path === EN_PATH || path.startsWith(`${EN_PATH}/`) ? 'en' : 'he';
+};
+
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('lang');
     if (saved === 'he' || saved === 'en') return saved;
-    return window.location.pathname.startsWith('/en') ? 'en' : 'he';
+    return detectLang();
   });
 
   useEffect(() => {
@@ -27,8 +36,8 @@ export default function App() {
     document.body.className = dir === 'rtl' ? 'rtl' : 'ltr';
     localStorage.setItem('lang', lang);
 
-    // Update URL without reload
-    const newPath = lang === 'en' ? '/en' : '/';
+    // Update URL without reload — respect the deploy base path
+    const newPath = lang === 'en' ? EN_PATH : HE_PATH;
     if (window.location.pathname !== newPath) {
       window.history.pushState({ lang }, '', newPath);
     }
@@ -36,10 +45,7 @@ export default function App() {
 
   // Handle browser back/forward
   useEffect(() => {
-    const handlePopState = () => {
-      const isEn = window.location.pathname.startsWith('/en');
-      setLang(isEn ? 'en' : 'he');
-    };
+    const handlePopState = () => setLang(detectLang());
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
