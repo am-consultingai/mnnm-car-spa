@@ -69,6 +69,7 @@ export default function App() {
     document.documentElement.dir = dir;
     document.documentElement.lang = lang;
     document.body.className = dir === 'rtl' ? 'rtl' : 'ltr';
+    document.title = lang === 'he' ? 'מננם ספא רכב' : 'MNNM Car Spa';
     localStorage.setItem('lang', lang);
 
     const newPath = lang === 'en' ? EN_PATH : HE_PATH;
