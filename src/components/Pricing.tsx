@@ -5,9 +5,12 @@ import { cn } from '../lib/utils';
 
 interface PricingProps {
   lang: Language;
+  price: number;
+  currency: string;
+  onBook: () => void;
 }
 
-export default function Pricing({ lang }: PricingProps) {
+export default function Pricing({ lang, price, currency, onBook }: PricingProps) {
   const t = translations[lang].pricing;
 
   return (
@@ -50,9 +53,9 @@ export default function Pricing({ lang }: PricingProps) {
               <p className="text-[11px] uppercase tracking-widest text-white/50 mb-3">{t.sub}</p>
               <div className="flex items-baseline gap-2">
                 <span className="text-7xl md:text-8xl font-display font-black text-brand-yellow tracking-tighter leading-none">
-                  15
+                  {price}
                 </span>
-                <span className="text-3xl md:text-4xl font-display font-bold text-white/80">₪</span>
+                <span className="text-3xl md:text-4xl font-display font-bold text-white/80">{currency}</span>
               </div>
             </div>
 
@@ -67,8 +70,9 @@ export default function Pricing({ lang }: PricingProps) {
               ))}
             </ul>
 
-            <a
-              href="#booking"
+            <button
+              type="button"
+              onClick={onBook}
               className="group flex items-center justify-center gap-3 w-full py-4 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all rounded-md shadow-xl shadow-brand-yellow/20"
             >
               {t.cta}
@@ -80,7 +84,7 @@ export default function Pricing({ lang }: PricingProps) {
                 size={16}
                 strokeWidth={2.5}
               />
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>

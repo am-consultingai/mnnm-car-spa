@@ -7,9 +7,12 @@ import { useState, useEffect } from 'react';
 interface NavigationProps {
   lang: Language;
   setLang: (lang: Language) => void;
+  price: number;
+  currency: string;
+  onBook: () => void;
 }
 
-export default function Navigation({ lang, setLang }: NavigationProps) {
+export default function Navigation({ lang, setLang, price, currency, onBook }: NavigationProps) {
   const t = translations[lang].nav;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,12 +73,13 @@ export default function Navigation({ lang, setLang }: NavigationProps) {
             >
               {lang === 'he' ? 'EN' : 'עב'}
             </button>
-            <a
-              href="#booking"
+            <button
+              type="button"
+              onClick={onBook}
               className="px-6 py-3 bg-brand-yellow text-brand-navy font-bold text-xs uppercase tracking-wider hover:bg-white transition-all rounded-sm shadow-lg shadow-brand-yellow/20"
             >
-              {t.cta}
-            </a>
+              {t.ctaPrefix}{price} {currency}
+            </button>
           </div>
         </div>
 
@@ -118,13 +122,16 @@ export default function Navigation({ lang, setLang }: NavigationProps) {
               >
                 {lang === 'he' ? 'English' : 'עברית'}
               </button>
-              <a
-                href="#booking"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onBook();
+                }}
                 className="w-full py-4 bg-brand-yellow text-brand-navy font-bold text-center rounded-md shadow-xl"
               >
-                {t.cta}
-              </a>
+                {t.ctaPrefix}{price} {currency}
+              </button>
             </div>
           </div>
         </motion.div>
