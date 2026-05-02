@@ -116,7 +116,9 @@ function handleBooking(body) {
 
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(BOOKINGS_TAB);
     if (!sheet) throw new Error('Bookings tab not found');
-    sheet.appendRow([name, phone, new Date(), slot, cfg.price]);
+    // Insert just under the header so newest bookings are on top.
+    sheet.insertRowBefore(2);
+    sheet.getRange(2, 1, 1, 5).setValues([[name, phone, new Date(), slot, cfg.price]]);
 
     if (email) {
       try {
