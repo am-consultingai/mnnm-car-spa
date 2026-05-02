@@ -7,12 +7,13 @@ import { useState, useEffect } from 'react';
 interface NavigationProps {
   lang: Language;
   setLang: (lang: Language) => void;
-  price: number;
-  currency: string;
+  price: number | null;
+  currency: string | null;
   onBook: () => void;
 }
 
 export default function Navigation({ lang, setLang, price, currency, onBook }: NavigationProps) {
+  const priceLabel = price !== null && currency ? `${price} ${currency}` : '';
   const t = translations[lang].nav;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function Navigation({ lang, setLang, price, currency, onBook }: N
           : 'bg-transparent py-6'
       )}
     >
-      <div className="container mx-auto px-6 md:px-10 flex items-center justify-between">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 flex items-center justify-between">
         {/* Logo */}
         <a href="#home" className="flex flex-col group">
           <h1 className="text-xl md:text-2xl font-display font-black text-white uppercase tracking-tight leading-none">
@@ -78,7 +79,7 @@ export default function Navigation({ lang, setLang, price, currency, onBook }: N
               onClick={onBook}
               className="px-6 py-3 bg-brand-yellow text-brand-navy font-bold text-xs uppercase tracking-wider hover:bg-white transition-all rounded-sm shadow-lg shadow-brand-yellow/20"
             >
-              {t.ctaPrefix}{price} {currency}
+              {priceLabel ? `${t.ctaPrefix}${priceLabel}` : t.book}
             </button>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function Navigation({ lang, setLang, price, currency, onBook }: N
                 }}
                 className="w-full py-4 bg-brand-yellow text-brand-navy font-bold text-center rounded-md shadow-xl"
               >
-                {t.ctaPrefix}{price} {currency}
+                {priceLabel ? `${t.ctaPrefix}${priceLabel}` : t.book}
               </button>
             </div>
           </div>

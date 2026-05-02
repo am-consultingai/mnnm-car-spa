@@ -5,8 +5,8 @@ import { cn } from '../lib/utils';
 
 interface PricingProps {
   lang: Language;
-  price: number;
-  currency: string;
+  price: number | null;
+  currency: string | null;
   onBook: () => void;
 }
 
@@ -18,19 +18,21 @@ export default function Pricing({ lang, price, currency, onBook }: PricingProps)
       {/* Soft yellow halo */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 relative z-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
           {/* Left: copy */}
           <div className={cn(lang === 'he' ? 'md:order-2 text-right' : 'md:order-1 text-left')}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight mb-6 leading-[0.95]">
+            <h2 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight mb-6 leading-[0.95]">
               {t.eyebrow}
             </h2>
             <p className="text-white/60 text-base md:text-lg leading-relaxed mb-8 max-w-md">
               {t.notes}
             </p>
-            <div className="flex items-center gap-3 text-brand-yellow text-sm font-semibold uppercase tracking-wider">
+            <div className="flex items-center gap-3 text-brand-yellow text-sm font-semibold uppercase tracking-wider min-h-[1.5em]">
               <span className="block w-8 h-px bg-brand-yellow" />
-              {lang === 'he' ? '15 ₪. נקודה.' : '15 ₪. Period.'}
+              {price !== null && currency
+                ? (lang === 'he' ? `${price} ${currency}. נקודה.` : `${price} ${currency}. Period.`)
+                : ''}
             </div>
           </div>
 
@@ -40,7 +42,7 @@ export default function Pricing({ lang, price, currency, onBook }: PricingProps)
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className={cn(
-              'relative w-full bg-white/[0.04] border border-white/10 rounded-xl p-8 md:p-10 backdrop-blur-sm',
+              'relative w-full bg-white/[0.04] border border-white/10 rounded-xl p-6 sm:p-8 md:p-10 backdrop-blur-sm',
               lang === 'he' ? 'md:order-1' : 'md:order-2'
             )}
           >
@@ -51,11 +53,15 @@ export default function Pricing({ lang, price, currency, onBook }: PricingProps)
 
             <div className="mb-8 pb-8 border-b border-white/10">
               <p className="text-[11px] uppercase tracking-widest text-white/50 mb-3">{t.sub}</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-7xl md:text-8xl font-display font-black text-brand-yellow tracking-tighter leading-none">
-                  {price}
-                </span>
-                <span className="text-3xl md:text-4xl font-display font-bold text-white/80">{currency}</span>
+              <div className="flex items-baseline gap-2 min-h-[1em]">
+                {price !== null && currency && (
+                  <>
+                    <span className="text-6xl sm:text-7xl md:text-8xl font-display font-black text-brand-yellow tracking-tighter leading-none">
+                      {price}
+                    </span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white/80">{currency}</span>
+                  </>
+                )}
               </div>
             </div>
 

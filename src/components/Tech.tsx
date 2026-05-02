@@ -16,12 +16,12 @@ export default function Tech({ lang }: TechProps) {
       {/* subtle radial accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-brand-yellow/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 relative z-10">
         <div className="max-w-4xl mb-16 md:mb-24">
           <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-6 inline-block">
             {lang === 'he' ? 'מפרט הציוד' : 'Equipment spec sheet'}
           </span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black mb-8 uppercase tracking-tight leading-[0.95]">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black mb-8 uppercase tracking-tight leading-[0.95]">
             {t.title}
           </h2>
           <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed">
@@ -39,7 +39,7 @@ export default function Tech({ lang }: TechProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group bg-white/[0.03] border border-white/10 rounded-lg p-8 md:p-10 hover:border-brand-yellow/30 hover:bg-white/[0.05] transition-all"
+                className="group bg-white/[0.03] border border-white/10 rounded-lg p-6 sm:p-8 md:p-10 hover:border-brand-yellow/30 hover:bg-white/[0.05] transition-all"
               >
                 <div className="flex items-start gap-5 mb-6">
                   <div className="w-12 h-12 rounded-md bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">

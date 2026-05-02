@@ -13,7 +13,7 @@ export default function Testimonials({ lang }: TestimonialsProps) {
     <section id="love" className="section-padding bg-brand-navy relative overflow-hidden border-b border-white/5">
       <div className="absolute inset-0 grid-bg opacity-[0.04] pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 relative z-10">
         <div className="max-w-4xl mb-16 md:mb-20">
           {/* Five-star anchor */}
           <div className="flex items-center gap-1 mb-6">
@@ -30,7 +30,7 @@ export default function Testimonials({ lang }: TestimonialsProps) {
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
             {t.title}
           </h2>
         </div>
@@ -43,7 +43,7 @@ export default function Testimonials({ lang }: TestimonialsProps) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/[0.04] border border-white/10 rounded-lg p-8 md:p-10 flex flex-col justify-between min-h-[320px] hover:border-brand-yellow/30 transition-all"
+              className="bg-white/[0.04] border border-white/10 rounded-lg p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[240px] sm:min-h-[320px] hover:border-brand-yellow/30 transition-all"
             >
               <div>
                 <Quote className="text-brand-yellow/40 w-10 h-10 mb-6" strokeWidth={1.5} />

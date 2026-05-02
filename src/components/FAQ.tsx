@@ -14,13 +14,13 @@ export default function FAQ({ lang }: FAQProps) {
 
   return (
     <section id="faq" className="section-padding bg-brand-navy-deep border-b border-white/5">
-      <div className="container mx-auto px-6 md:px-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 md:gap-16">
           <div className="md:col-span-1">
             <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-6 inline-block">
               {lang === 'he' ? 'שאלות' : 'Questions'}
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight leading-[0.95] mb-6">
+            <h2 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight leading-[0.95] mb-6">
               {t.title}
             </h2>
             <p className="text-white/55 text-base leading-relaxed">

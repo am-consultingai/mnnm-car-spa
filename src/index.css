@@ -6,6 +6,12 @@
   --font-display: "Heebo", "Inter", sans-serif;
   --font-serif: "Playfair Display", serif;
 
+  /* Bump body text one notch up; headings (text-xl and above) untouched. */
+  --text-xs: 0.875rem;     /* 14px (was 12px) */
+  --text-sm: 1rem;          /* 16px (was 14px) */
+  --text-base: 1.125rem;    /* 18px (was 16px) */
+  --text-lg: 1.25rem;       /* 20px (was 18px) */
+
   --color-brand-navy: #0B1B3A;
   --color-brand-navy-deep: #07132A;
   --color-brand-chrome: #F5F5F5;

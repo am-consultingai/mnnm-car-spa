@@ -18,9 +18,9 @@ export default function Why({ lang }: WhyProps) {
 
   return (
     <section id="why" className="section-padding bg-brand-navy border-y border-white/5 relative overflow-hidden">
-      <div className="container mx-auto px-6 md:px-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end gap-6 mb-16 md:mb-20">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
             {t.title}
           </h2>
           <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-2">
@@ -39,7 +39,7 @@ export default function Why({ lang }: WhyProps) {
                 transition={{ delay: index * 0.15 }}
                 viewport={{ once: true }}
                 className={cn(
-                  'group p-10 flex flex-col h-full',
+                  'group p-6 sm:p-8 lg:p-10 flex flex-col h-full',
                   'bg-white/[0.03] border border-white/10 rounded-lg',
                   'hover:bg-white/[0.06] hover:border-brand-yellow/30 transition-all'
                 )}

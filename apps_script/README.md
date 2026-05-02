@@ -16,21 +16,23 @@ Create a new Google Sheet (e.g. "MNNM Bookings"). Make two tabs:
 
 Then **format column D as Plain text** (Format → Number → Plain text). This stops Sheets from reformatting `2026-05-03T10:00` into something else.
 
-**`Config`** — column A is the key, column B is the value. Add rows like:
+**`Config`** — column A is the key. For `price` / `currency` rows the value goes in column B. For `slot` rows, **column B is the date** (use Sheets' calendar date picker — Insert → Date) and **column C is the time** in 24-hour `HH:MM` format. Example:
 
-| A (key) | B (value) |
-|---|---|
-| price | 15 |
-| currency | ₪ |
-| slot | 2026-05-03T10:00 |
-| slot | 2026-05-03T11:00 |
-| slot | 2026-05-03T12:00 |
-| slot | 2026-05-04T10:00 |
-| ... | ... |
+| A (key) | B | C |
+|---|---|---|
+| price | 15 | |
+| currency | ₪ | |
+| slot | 2026-05-03 | 10:00 |
+| slot | 2026-05-03 | 11:00 |
+| slot | 2026-05-03 | 12:00 |
+| slot | 2026-05-04 | 10:00 |
+| ... | ... | ... |
 
-Format **column B as Plain text** as well.
-
-Slot format is strict: `YYYY-MM-DDTHH:MM` (24-hour, Asia/Jerusalem time). Add as many `slot` rows as you want; the web app will hide ones that have already been booked.
+Tips:
+- **Column B**: pick a date with the calendar UI (right-click → Insert → Date). Sheets stores it as a real date, the script formats it to `YYYY-MM-DD` in the Asia/Jerusalem timezone.
+- **Column C**: type `10:00` (24-hour). Either text or a Sheets time value works.
+- Add as many `slot` rows as you want; the web app hides ones that have already been booked.
+- The legacy single-column format (B = `2026-05-03T10:00`, C empty) still works if you have older rows — no need to migrate.
 
 ### 2. Paste the script
 

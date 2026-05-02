@@ -13,12 +13,12 @@ export default function How({ lang }: HowProps) {
 
   return (
     <section id="how" className="section-padding bg-brand-navy-deep relative overflow-hidden border-b border-white/5">
-      <div className="container mx-auto px-6 md:px-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10">
         <div className="max-w-4xl mb-16 md:mb-20">
           <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-6 inline-block">
             {lang === 'he' ? 'איך זה עובד' : 'How it works'}
           </span>
-          <h2 className="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
             {lang === 'he' ? '4 צעדים. רכב מבריק.' : '4 steps. Shiny car.'}
           </h2>
         </div>

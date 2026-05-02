@@ -15,7 +15,7 @@ export default function Charity({ lang }: CharityProps) {
       {/* soft warm glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-brand-yellow/[0.05] rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -27,7 +27,7 @@ export default function Charity({ lang }: CharityProps) {
           </div>
 
           {/* Sincere title — sentence case, not screaming uppercase */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white tracking-tight leading-tight mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-display font-bold text-white tracking-tight leading-tight mb-10">
             {t.title}
           </h2>
 

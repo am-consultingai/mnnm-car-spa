@@ -153,26 +153,75 @@ function createCalendarInvite(opts) {
 function readConfigTab() {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(CONFIG_TAB);
   if (!sheet) throw new Error('Config tab not found');
-  const values = sheet.getRange(1, 1, sheet.getLastRow(), 2).getValues();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 1) return { price: 15, currency: '₪', slots: [] };
+  const values = sheet.getRange(1, 1, lastRow, 3).getValues();
   let price = 15;
   let currency = '₪';
   const slots = [];
   for (let i = 0; i < values.length; i++) {
     const key = String(values[i][0] || '').trim().toLowerCase();
-    const raw = values[i][1];
+    const colB = values[i][1];
+    const colC = values[i][2];
     if (!key) continue;
     if (key === 'price') {
-      const n = Number(raw);
+      const n = Number(colB);
       if (!isNaN(n) && n > 0) price = n;
     } else if (key === 'currency') {
-      const c = String(raw || '').trim();
+      const c = String(colB || '').trim();
       if (c) currency = c;
     } else if (key === 'slot') {
-      const s = toSlotString(raw);
+      // New format: B = date (calendar), C = time (HH:MM 24h).
+      // Legacy: B alone holds "YYYY-MM-DDTHH:MM" or "YYYY-MM-DD HH:MM".
+      const s = (colC === '' || colC == null)
+        ? toSlotString(colB)
+        : combineDateAndTime(colB, colC);
       if (s && isValidSlotString(s)) slots.push(s);
     }
   }
   return { price: price, currency: currency, slots: slots };
+}
+
+/** Combine a calendar date (col B) and a time (col C) into "YYYY-MM-DDTHH:MM". */
+function combineDateAndTime(dateVal, timeVal) {
+  const datePart = toDateOnlyString(dateVal);
+  const timePart = toTimeOnlyString(timeVal);
+  if (!datePart || !timePart) return '';
+  return datePart + 'T' + timePart;
+}
+
+function toDateOnlyString(v) {
+  if (v && typeof v === 'object' && Object.prototype.toString.call(v) === '[object Date]') {
+    return Utilities.formatDate(v, TIMEZONE, 'yyyy-MM-dd');
+  }
+  const raw = String(v == null ? '' : v).trim();
+  const m = raw.match(/^(\d{4}-\d{2}-\d{2})([ T].*)?$/);
+  if (m) return m[1];
+  // Allow common DD/MM/YYYY display format from Sheets locale.
+  const m2 = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (m2) return m2[3] + '-' + m2[2] + '-' + m2[1];
+  return '';
+}
+
+function toTimeOnlyString(v) {
+  if (v && typeof v === 'object' && Object.prototype.toString.call(v) === '[object Date]') {
+    return Utilities.formatDate(v, TIMEZONE, 'HH:mm');
+  }
+  // Number: Sheets stores a time-only cell as a fraction of a day (0..1).
+  if (typeof v === 'number' && v >= 0 && v < 1) {
+    const totalMin = Math.round(v * 24 * 60);
+    const hh = Math.floor(totalMin / 60);
+    const mm = totalMin % 60;
+    return pad2(hh) + ':' + pad2(mm);
+  }
+  const raw = String(v == null ? '' : v).trim();
+  const m = raw.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+  if (m) return pad2(Number(m[1])) + ':' + m[2];
+  return '';
+}
+
+function pad2(n) {
+  return n < 10 ? '0' + n : '' + n;
 }
 
 function readBookedSlots() {

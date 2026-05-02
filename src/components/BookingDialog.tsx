@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useRef, useState, FormEvent, ReactNode } from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle2, X, User, Phone, Calendar, Clock, Mail, Send, Loader2 } from 'lucide-react';
+import { CheckCircle2, X, User, Phone, Calendar, Clock, Mail, Send, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Language, translations } from '../translations';
 import { cn } from '../lib/utils';
 import {
   BookingConfig,
-  formatDayLabel,
   groupSlotsByDay,
   isBookingConfigured,
   joinSlot,
@@ -26,7 +25,7 @@ interface BookingDialogProps {
 type Step = 'form' | 'submitting' | 'success' | 'error';
 
 const inputClass =
-  'w-full bg-white/[0.04] border border-white/10 rounded-md px-4 py-3 text-white placeholder-white/30 focus:border-brand-yellow focus:bg-white/[0.07] outline-none transition-all text-base disabled:opacity-50';
+  'w-full bg-white/[0.04] border border-white/10 rounded-md px-4 py-4 text-white placeholder-white/30 focus:border-brand-yellow focus:bg-white/[0.07] outline-none transition-all text-base disabled:opacity-50';
 
 export default function BookingDialog({
   lang,
@@ -49,6 +48,7 @@ export default function BookingDialog({
   const [time, setTime] = useState('');
 
   const groupedDays = useMemo(() => (config ? groupSlotsByDay(config.slots) : []), [config]);
+  const availableDaysSet = useMemo(() => new Set(groupedDays.map((g) => g.day)), [groupedDays]);
   const timesForDay = useMemo(() => groupedDays.find((g) => g.day === day)?.times ?? [], [groupedDays, day]);
 
   // Open / close the native dialog when the prop flips.
@@ -96,8 +96,9 @@ export default function BookingDialog({
     if (time && !timesForDay.includes(time)) setTime('');
   }, [timesForDay, time]);
 
-  const price = config?.price ?? 15;
-  const currency = config?.currency ?? '₪';
+  const price = config?.price ?? null;
+  const currency = config?.currency ?? null;
+  const priceLabel = price !== null && currency ? `${price} ${currency}` : '';
   const notConfigured = !isBookingConfigured();
   const hasSlots = groupedDays.length > 0;
 
@@ -150,7 +151,7 @@ export default function BookingDialog({
       dir={translations[lang].dir}
       className={cn(
         'p-0 m-auto bg-transparent backdrop:bg-brand-navy-deep/85 backdrop:backdrop-blur-sm',
-        'w-full max-w-xl rounded-xl',
+        'w-full max-w-2xl rounded-xl',
         'open:animate-[fadeIn_.18s_ease-out]'
       )}
       aria-labelledby="booking-dialog-title"
@@ -177,10 +178,15 @@ export default function BookingDialog({
 
         <div className="px-6 md:px-8 pb-6 md:pb-8">
           {step === 'success' ? (
-            <SuccessPanel lang={lang} onAgain={() => {
-              setStep('form');
-              setName(''); setPhone(''); setEmail(''); setDay(''); setTime('');
-            }} onClose={onClose} />
+            <SuccessPanel
+              lang={lang}
+              emailProvided={Boolean(email.trim())}
+              onAgain={() => {
+                setStep('form');
+                setName(''); setPhone(''); setEmail(''); setDay(''); setTime('');
+              }}
+              onClose={onClose}
+            />
           ) : configLoading && !config ? (
             <div className="py-12 flex flex-col items-center gap-3 text-white/60">
               <Loader2 className="animate-spin" size={20} />
@@ -217,37 +223,45 @@ export default function BookingDialog({
                 />
               </Field>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-[auto_1fr] gap-4 items-start">
                 <Field label={t.day} icon={<Calendar size={13} className="text-brand-yellow" />}>
-                  <select
-                    required
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                    className={cn(inputClass, '[color-scheme:dark]')}
+                  <CalendarPicker
+                    lang={lang}
+                    availableDays={availableDaysSet}
+                    selectedDay={day}
+                    onSelect={(d) => { setDay(d); setTime(''); }}
                     disabled={step === 'submitting'}
-                  >
-                    <option value="">{t.dayPlaceholder}</option>
-                    {groupedDays.map((g) => (
-                      <option key={g.day} value={g.day}>
-                        {formatDayLabel(g.day, lang)}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </Field>
 
                 <Field label={t.time} icon={<Clock size={13} className="text-brand-yellow" />}>
-                  <select
-                    required
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className={cn(inputClass, '[color-scheme:dark]')}
-                    disabled={step === 'submitting' || !day}
-                  >
-                    <option value="">{t.timePlaceholder}</option>
-                    {timesForDay.map((tm) => (
-                      <option key={tm} value={tm}>{tm}</option>
-                    ))}
-                  </select>
+                  {!day ? (
+                    <p className="text-sm text-white/45 italic leading-snug">{t.pickDayFirst}</p>
+                  ) : (
+                    <div className="flex flex-col gap-2 max-h-72 overflow-y-auto pr-1">
+                      {timesForDay.map((tm) => {
+                        const active = tm === time;
+                        return (
+                          <button
+                            key={tm}
+                            type="button"
+                            disabled={step === 'submitting'}
+                            onClick={() => setTime(tm)}
+                            className={cn(
+                              'w-full px-4 py-3 rounded-md font-mono text-sm font-bold tracking-wide transition-all border text-center',
+                              active
+                                ? 'bg-brand-yellow text-brand-navy border-brand-yellow shadow-md shadow-brand-yellow/20'
+                                : 'bg-white/[0.04] text-white border-white/15 hover:border-brand-yellow/60 hover:bg-white/[0.07]',
+                              step === 'submitting' && 'opacity-50 cursor-not-allowed'
+                            )}
+                            dir="ltr"
+                          >
+                            {tm}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </Field>
               </div>
 
@@ -285,7 +299,7 @@ export default function BookingDialog({
                   </>
                 ) : (
                   <>
-                    {t.submitPrefix}{price} {currency}
+                    {priceLabel ? `${t.submitPrefix}${priceLabel}` : t.submitPrefix.replace(/[—-]\s*$/, '').trim()}
                     <Send className={lang === 'he' ? 'rotate-180' : ''} size={16} strokeWidth={2.5} />
                   </>
                 )}
@@ -307,6 +321,136 @@ export default function BookingDialog({
   );
 }
 
+function CalendarPicker({
+  lang,
+  availableDays,
+  selectedDay,
+  onSelect,
+  disabled,
+}: {
+  lang: Language;
+  availableDays: Set<string>;
+  selectedDay: string;
+  onSelect: (day: string) => void;
+  disabled?: boolean;
+}) {
+  const t = translations[lang].booking;
+  const locale = lang === 'he' ? 'he-IL' : 'en-IL';
+  const todayIso = useMemo(() => isoDay(new Date()), []);
+
+  // Initial month: month of earliest available day, or today if none.
+  const initial = useMemo(() => {
+    const sorted = Array.from(availableDays).sort();
+    if (sorted.length > 0) {
+      const [y, m] = sorted[0].split('-').map(Number);
+      return { year: y, month: m - 1 };
+    }
+    const now = new Date();
+    return { year: now.getFullYear(), month: now.getMonth() };
+  }, [availableDays]);
+
+  const [view, setView] = useState(initial);
+  // If availability changes (e.g. config refresh) and the current view has no
+  // slots and the selected month is not where the selection lives, drift forward.
+  useEffect(() => { setView(initial); }, [initial]);
+
+  const monthLabel = useMemo(() => {
+    const d = new Date(view.year, view.month, 1);
+    return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(d);
+  }, [view.year, view.month, locale]);
+
+  const weekdayLabels = useMemo(() => {
+    // Sunday = 0, Saturday = 6 — Israeli/Hebrew week starts on Sunday.
+    const fmt = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+    return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(2024, 0, 7 + i))); // Jan 7 2024 was a Sunday
+  }, [locale]);
+
+  const cells = useMemo(() => {
+    const firstOffset = new Date(view.year, view.month, 1).getDay();
+    const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
+    const out: Array<{ iso: string; day: number } | null> = [];
+    for (let i = 0; i < firstOffset; i++) out.push(null);
+    for (let d = 1; d <= daysInMonth; d++) {
+      const iso = `${view.year}-${pad2(view.month + 1)}-${pad2(d)}`;
+      out.push({ iso, day: d });
+    }
+    while (out.length < 42) out.push(null);
+    return out;
+  }, [view.year, view.month]);
+
+  const goPrev = () => setView((v) => v.month === 0 ? { year: v.year - 1, month: 11 } : { year: v.year, month: v.month - 1 });
+  const goNext = () => setView((v) => v.month === 11 ? { year: v.year + 1, month: 0 } : { year: v.year, month: v.month + 1 });
+
+  return (
+    <div className="bg-white/[0.03] border border-white/10 rounded-md p-2 inline-block">
+      <div className="flex items-center justify-between mb-2 gap-2">
+        <button
+          type="button"
+          onClick={goPrev}
+          disabled={disabled}
+          aria-label={t.prevMonth}
+          className="p-1 rounded text-white/70 hover:text-white hover:bg-white/5 transition disabled:opacity-30"
+        >
+          <ChevronLeft size={16} className={lang === 'he' ? 'rotate-180' : ''} />
+        </button>
+        <span className="text-sm font-bold text-white tracking-wide whitespace-nowrap">{monthLabel}</span>
+        <button
+          type="button"
+          onClick={goNext}
+          disabled={disabled}
+          aria-label={t.nextMonth}
+          className="p-1 rounded text-white/70 hover:text-white hover:bg-white/5 transition disabled:opacity-30"
+        >
+          <ChevronRight size={16} className={lang === 'he' ? 'rotate-180' : ''} />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-7 gap-0.5 mb-1 text-center">
+        {weekdayLabels.map((wd, i) => (
+          <span key={i} className="text-[10px] font-bold text-white/40 uppercase w-8">{wd}</span>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-7 gap-0.5">
+        {cells.map((cell, i) => {
+          if (!cell) return <span key={i} aria-hidden className="w-8 h-8" />;
+          const isAvailable = availableDays.has(cell.iso);
+          const isSelected = cell.iso === selectedDay;
+          const isToday = cell.iso === todayIso;
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => isAvailable && onSelect(cell.iso)}
+              disabled={!isAvailable || disabled}
+              aria-pressed={isSelected}
+              className={cn(
+                'w-8 h-8 flex items-center justify-center rounded text-sm font-bold transition relative',
+                isSelected && 'bg-brand-yellow text-brand-navy shadow-md shadow-brand-yellow/30',
+                !isSelected && isAvailable && 'bg-brand-yellow/15 text-brand-yellow border border-brand-yellow/40 hover:bg-brand-yellow/25 cursor-pointer',
+                !isAvailable && 'text-white/25 cursor-not-allowed'
+              )}
+            >
+              {cell.day}
+              {isToday && !isSelected && (
+                <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-brand-yellow" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function isoDay(d: Date): string {
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
+function pad2(n: number): string {
+  return n < 10 ? `0${n}` : `${n}`;
+}
+
 function Field({ label, icon, children }: { label: string; icon: ReactNode; children: ReactNode }) {
   return (
     <div className="space-y-2">
@@ -318,36 +462,66 @@ function Field({ label, icon, children }: { label: string; icon: ReactNode; chil
   );
 }
 
-function SuccessPanel({ lang, onAgain, onClose }: { lang: Language; onAgain: () => void; onClose: () => void }) {
+function SuccessPanel({
+  lang,
+  emailProvided,
+  onAgain,
+  onClose,
+}: {
+  lang: Language;
+  emailProvided: boolean;
+  onAgain: () => void;
+  onClose: () => void;
+}) {
   const t = translations[lang].booking;
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center text-center py-8"
+      className="relative -mx-6 md:-mx-8 -mb-6 md:-mb-8 overflow-hidden rounded-b-xl"
     >
-      <div className="w-16 h-16 bg-brand-yellow/15 rounded-full flex items-center justify-center mb-6">
-        <CheckCircle2 className="text-brand-yellow" size={32} strokeWidth={2} />
-      </div>
-      <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 tracking-tight">
-        {t.success.split('.')[0]}
-      </h3>
-      <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-md">
-        {t.success.split('.').slice(1).join('.').trim()}
-      </p>
-      <div className="flex flex-col sm:flex-row gap-3 mt-8">
-        <button
-          onClick={onAgain}
-          className="text-white/80 border-b border-white/30 pb-1 font-semibold text-xs uppercase tracking-wider hover:text-brand-yellow hover:border-brand-yellow transition-all"
-        >
-          {t.bookAnother}
-        </button>
-        <button
-          onClick={onClose}
-          className="text-white/50 text-xs uppercase tracking-wider hover:text-white transition-colors"
-        >
-          {t.close}
-        </button>
+      {/* Brothers backdrop */}
+      <img
+        src={`${import.meta.env.BASE_URL}brothers2.jpg`}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover opacity-70"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/55 via-brand-navy/40 to-brand-navy/75" />
+
+      <div className="relative flex flex-col items-center justify-center text-center px-6 md:px-8 py-12">
+        <div className="w-16 h-16 bg-brand-yellow/20 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
+          <CheckCircle2 className="text-brand-yellow" size={32} strokeWidth={2} />
+        </div>
+        <h3 className="text-2xl md:text-3xl font-display font-bold mb-4 tracking-tight">
+          {t.successTitle}
+        </h3>
+        <p className="text-sm md:text-base text-white/85 leading-relaxed max-w-md mb-4">
+          {t.successBody}
+        </p>
+        {emailProvided && (
+          <p className="text-sm text-brand-yellow/90 leading-snug max-w-md mb-4 flex items-center gap-2 justify-center">
+            <Mail size={14} className="text-brand-yellow" />
+            {t.successEmailNote}
+          </p>
+        )}
+        <p className="text-xs md:text-sm text-white/60 italic max-w-md">
+          {t.successSignoff}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <button
+            onClick={onAgain}
+            className="text-white/80 border-b border-white/30 pb-1 font-semibold text-xs uppercase tracking-wider hover:text-brand-yellow hover:border-brand-yellow transition-all"
+          >
+            {t.bookAnother}
+          </button>
+          <button
+            onClick={onClose}
+            className="text-white/50 text-xs uppercase tracking-wider hover:text-white transition-colors"
+          >
+            {t.close}
+          </button>
+        </div>
       </div>
     </motion.div>
   );
