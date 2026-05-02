@@ -85,17 +85,17 @@ export const translations = {
         {
           name: 'מתן',
           desc: 'האח הגדול. אחראי על המים, על המוזיקה, ועל זה שכולם מגיעים בזמן.',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+          image: '/matan.png',
         },
         {
           name: 'נועם',
           desc: 'המוח של הציוד. אם זה מבריק — נועם בחר את החומר.',
-          image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+          image: '/noam.png',
         },
         {
           name: 'נטע',
           desc: 'לא נחה עד שהרכב נראה טוב יותר משיצא מהסוכנות.',
-          image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+          image: '/neta.png',
         },
       ],
     },
@@ -240,17 +240,17 @@ export const translations = {
         {
           name: 'Matan',
           desc: 'The big brother. In charge of the water, the playlist, and making sure everyone shows up on time.',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+          image: '/matan.png',
         },
         {
           name: 'Noam',
           desc: 'The gear nerd. If it shines, Noam picked the product.',
-          image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+          image: '/noam.png',
         },
         {
           name: 'Neta',
           desc: "Doesn't rest until the car looks better than it did at the dealership.",
-          image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+          image: '/neta.png',
         },
       ],
     },

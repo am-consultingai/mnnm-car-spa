@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Language, translations } from '../translations';
-import { Check, Sparkles } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface PricingProps {
   lang: Language;
@@ -11,53 +12,74 @@ export default function Pricing({ lang }: PricingProps) {
 
   return (
     <section id="pricing" className="section-padding bg-brand-navy relative overflow-hidden border-b border-white/5">
-      {/* Decorative patterns */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+      {/* Soft yellow halo */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="container mx-auto px-10 relative z-10">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-20">
-          {/* Typographic side */}
-          <div className="flex-1 text-center md:text-left">
-            <span className="text-brand-blue text-xs font-bold tracking-[0.4em] uppercase mb-6 block">
-              Transparent Pricing
-            </span>
-            <h2 className="text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-8 leading-tight">
+      <div className="container mx-auto px-6 md:px-10 relative z-10">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+          {/* Left: copy */}
+          <div className={cn(lang === 'he' ? 'md:order-2 text-right' : 'md:order-1 text-left')}>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight mb-6 leading-[0.95]">
               {t.eyebrow}
             </h2>
-            <p className="text-white/40 font-serif italic text-lg leading-relaxed mb-10 max-w-sm">
+            <p className="text-white/60 text-base md:text-lg leading-relaxed mb-8 max-w-md">
               {t.notes}
             </p>
+            <div className="flex items-center gap-3 text-brand-yellow text-sm font-semibold uppercase tracking-wider">
+              <span className="block w-8 h-px bg-brand-yellow" />
+              {lang === 'he' ? '15 ₪. נקודה.' : '15 ₪. Period.'}
+            </div>
           </div>
 
-          {/* Card side */}
+          {/* Right: card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex-1 w-full bg-white/5 border border-white/10 p-12 md:p-16 relative overflow-hidden"
+            className={cn(
+              'relative w-full bg-white/[0.04] border border-white/10 rounded-xl p-8 md:p-10 backdrop-blur-sm',
+              lang === 'he' ? 'md:order-1' : 'md:order-2'
+            )}
           >
-            <div className="mb-8 border-b border-white/10 pb-8">
-              <span className="text-[10px] uppercase tracking-widest text-white/30 block mb-2">{t.sub}</span>
-              <div className="text-8xl md:text-9xl font-display font-black text-brand-blue tracking-tighter leading-none mb-4">
-                {t.price}
+            {/* yellow ribbon */}
+            <span className="absolute -top-3 left-8 bg-brand-yellow text-brand-navy text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-sm">
+              {lang === 'he' ? 'הכי משתלם' : 'Best value'}
+            </span>
+
+            <div className="mb-8 pb-8 border-b border-white/10">
+              <p className="text-[11px] uppercase tracking-widest text-white/50 mb-3">{t.sub}</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-7xl md:text-8xl font-display font-black text-brand-yellow tracking-tighter leading-none">
+                  15
+                </span>
+                <span className="text-3xl md:text-4xl font-display font-bold text-white/80">₪</span>
               </div>
             </div>
 
-            <div className="space-y-6 mb-12">
+            <ul className="space-y-4 mb-10">
               {t.includes.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-4">
-                  <div className="w-1.5 h-1.5 bg-brand-blue rounded-full" />
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-white/70">{item}</span>
-                </div>
+                <li key={idx} className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-brand-yellow/20 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  <span className="text-white/85 text-base">{item}</span>
+                </li>
               ))}
-            </div>
+            </ul>
 
             <a
               href="#booking"
-              className="group block w-full py-5 bg-brand-blue text-brand-navy font-bold text-xs uppercase tracking-widest text-center hover:bg-white transition-all shadow-2xl shadow-brand-blue/10"
+              className="group flex items-center justify-center gap-3 w-full py-4 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all rounded-md shadow-xl shadow-brand-yellow/20"
             >
               {t.cta}
+              <ArrowRight
+                className={cn(
+                  'transition-transform group-hover:translate-x-1',
+                  lang === 'he' ? 'rotate-180' : ''
+                )}
+                size={16}
+                strokeWidth={2.5}
+              />
             </a>
           </motion.div>
         </div>

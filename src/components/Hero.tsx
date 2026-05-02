@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Language, translations } from '../translations';
-import { ChevronDown, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface HeroProps {
   lang: Language;
@@ -10,65 +11,108 @@ export default function Hero({ lang }: HeroProps) {
   const t = translations[lang].hero;
 
   return (
-    <section id="home" className="relative h-screen flex items-center overflow-hidden bg-brand-navy">
-      {/* Grid Background */}
-      <div className="absolute inset-0 z-0 grid-bg opacity-10 pointer-events-none" />
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-brand-navy">
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/clean.png"
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+      >
+        <source src="/car_wash.mp4" type="video/mp4" />
+      </video>
 
-      {/* Main Content Layout */}
-      <div className="container mx-auto px-10 h-full flex flex-col md:flex-row relative z-10">
-        {/* Left Column: Typography & Statement */}
-        <div className="w-full md:w-1/2 h-full flex flex-col justify-end pb-24 md:pb-32">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="text-brand-blue text-xs font-bold tracking-[0.3em] uppercase mb-6 block">
-              Est. 2024 — Israel
-            </span>
-            <h1 className="text-7xl md:text-[8rem] lg:text-[10rem] leading-[0.85] font-display font-black tracking-tighter uppercase mb-8">
-              {lang === 'he' ? (
-                <>מננם — <br/><span className="text-brand-blue">ספא רכב</span></>
-              ) : (
-                <>MNNM — <br/><span className="text-brand-blue">Car Spa</span></>
-              )}
-            </h1>
-            <p className="max-w-md text-base md:text-lg leading-relaxed text-slate-400 italic font-serif mb-12">
-              {t.sub}
-            </p>
+      {/* Gradient overlay so text stays legible */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/90 via-brand-navy/70 to-brand-navy/95" />
+      <div className="absolute inset-0 grid-bg opacity-[0.07] pointer-events-none" />
 
-            <div className="flex items-center gap-10 border-t border-white/10 pt-10">
-              <a
-                href="#booking"
-                className="group px-10 py-4 bg-brand-blue text-brand-navy font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-2xl shadow-brand-blue/20"
-              >
-                {t.cta}
-              </a>
-              <div className="hidden sm:block">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Price</p>
-                <p className="text-xl font-bold font-display">15 ₪</p>
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Impact</p>
-                <p className="text-xl font-bold font-display">10% Charity</p>
-              </div>
+      {/* Content */}
+      <div className="container mx-auto px-6 md:px-10 relative z-10 pt-32 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl"
+        >
+          <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-6 inline-block">
+            {lang === 'he' ? 'שטיפת רכב ידנית · ישראל' : 'Hand-wash car spa · Israel'}
+          </span>
+
+          <h1 className={cn(
+            "font-display font-black text-white leading-[0.9] mb-8",
+            "text-5xl sm:text-6xl md:text-7xl lg:text-[7.5rem]",
+            lang === 'he' ? 'tracking-tight' : 'tracking-tighter'
+          )}>
+            {lang === 'he' ? (
+              <>
+                <span className="block">מננם</span>
+                <span className="block text-brand-yellow">ספא רכב</span>
+              </>
+            ) : (
+              <>
+                <span className="block">MNNM</span>
+                <span className="block text-brand-yellow">Car Spa</span>
+              </>
+            )}
+          </h1>
+
+          <p className="max-w-xl text-lg md:text-2xl leading-relaxed text-white/80 mb-12 font-light">
+            {t.sub}
+          </p>
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+            <a
+              href="#booking"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-2xl shadow-brand-yellow/20 rounded-sm"
+            >
+              {t.cta}
+              <ArrowRight
+                className={cn(
+                  'transition-transform group-hover:translate-x-1',
+                  lang === 'he' ? 'rotate-180 group-hover:-translate-x-1 group-hover:translate-x-0' : ''
+                )}
+                size={18}
+                strokeWidth={2.5}
+              />
+            </a>
+
+            <a
+              href="#how"
+              className="text-sm font-medium text-white/70 hover:text-brand-yellow transition-colors underline-offset-4 hover:underline"
+            >
+              {lang === 'he' ? 'איך זה עובד? →' : 'How it works? →'}
+            </a>
+          </div>
+
+          {/* Stat row */}
+          <div className="mt-16 pt-10 border-t border-white/10 grid grid-cols-2 sm:flex sm:gap-16 gap-6 max-w-xl">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
+                {lang === 'he' ? 'מחיר' : 'Price'}
+              </p>
+              <p className="text-2xl md:text-3xl font-bold font-display text-white">15 ₪</p>
             </div>
-          </motion.div>
-        </div>
-
-        {/* Right Column: Abstract Visuals */}
-        <div className="hidden md:block md:w-1/2 h-full relative">
-          <div className="absolute top-32 right-0 w-[110%] h-[500px] bg-gradient-to-br from-brand-blue/20 to-slate-900/40 border-l border-y border-white/10 overflow-hidden transform rotate-2 origin-top-right">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=1200&q=80')] bg-cover opacity-40 mix-blend-overlay" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-blue/30 rounded-full blur-[120px]" />
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
+                {lang === 'he' ? 'תרומה' : 'Charity'}
+              </p>
+              <p className="text-2xl md:text-3xl font-bold font-display text-white">
+                10%
+                <span className="text-brand-yellow"> ★</span>
+              </p>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2">
+                {lang === 'he' ? 'משך הזמן' : 'Duration'}
+              </p>
+              <p className="text-2xl md:text-3xl font-bold font-display text-white">
+                20–30 <span className="text-base text-white/60">{lang === 'he' ? 'דק׳' : 'min'}</span>
+              </p>
+            </div>
           </div>
-
-          <div className="absolute bottom-24 right-0">
-            <p className="text-[10px] uppercase tracking-[1em] text-white/20 whitespace-nowrap rotate-90 origin-right translate-x-12">
-              Premium Automotive Restoration • Est. MMXXIV
-            </p>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

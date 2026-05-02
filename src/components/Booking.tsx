@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Language, translations } from '../translations';
 import { CheckCircle2, Phone, User, Car, Calendar, Clock, MessageSquare, Send } from 'lucide-react';
 import { useState, FormEvent } from 'react';
+import { cn } from '../lib/utils';
 
 interface BookingProps {
   lang: Language;
@@ -16,95 +17,97 @@ export default function Booking({ lang }: BookingProps) {
     setIsSubmitted(true);
   };
 
+  const inputClass =
+    'w-full bg-white/[0.04] border border-white/10 rounded-md px-4 py-3 text-white placeholder-white/30 focus:border-brand-yellow focus:bg-white/[0.07] outline-none transition-all text-base';
+
   return (
     <section id="booking" className="section-padding bg-brand-navy relative border-b border-white/5">
-      {/* Grid Background */}
-      <div className="absolute inset-0 z-0 grid-bg opacity-5 pointer-events-none" />
+      <div className="absolute inset-0 grid-bg opacity-[0.03] pointer-events-none" />
 
-      <div className="container mx-auto px-10 relative z-10">
-        <div className="max-w-6xl mx-auto border border-white/10 bg-brand-navy/80 backdrop-blur-xl overflow-hidden">
-          <div className="flex flex-col lg:flex-row">
+      <div className="container mx-auto px-6 md:px-10 relative z-10">
+        <div className="max-w-6xl mx-auto bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden">
+          <div className="grid lg:grid-cols-5">
             {/* Form Side */}
-            <div className="flex-1 p-10 md:p-16 border-r border-white/10">
-              <span className="text-brand-blue text-xs font-bold tracking-[0.4em] uppercase mb-6 block">
-                Reservation
+            <div className="lg:col-span-3 p-8 md:p-12 lg:p-16">
+              <span className="eyebrow text-brand-yellow text-xs font-bold uppercase mb-4 inline-block">
+                {lang === 'he' ? 'הזמנת תור' : 'Reservation'}
               </span>
-              <h2 className="text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-12">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white uppercase tracking-tight mb-8 leading-[0.95]">
                 {t.title}
               </h2>
 
               {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="space-y-10">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] flex items-center gap-3">
-                        <User size={12} className="text-brand-blue" /> {t.name}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                        <User size={13} className="text-brand-yellow" /> {t.name}
                       </label>
-                      <input
-                        required
-                        type="text"
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-brand-blue outline-none transition-all font-serif italic text-lg"
-                      />
+                      <input required type="text" className={inputClass} />
                     </div>
-                    <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] flex items-center gap-3">
-                        <Phone size={12} className="text-brand-blue" /> {t.phone}
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                        <Phone size={13} className="text-brand-yellow" /> {t.phone}
                       </label>
-                      <input
-                        required
-                        type="tel"
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-brand-blue outline-none transition-all font-serif italic text-lg"
-                      />
+                      <input required type="tel" className={inputClass} dir="ltr" />
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] flex items-center gap-3">
-                      <Car size={12} className="text-brand-blue" /> {t.car}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                      <Car size={13} className="text-brand-yellow" /> {t.car}
                     </label>
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-brand-blue outline-none transition-all font-serif italic text-lg"
-                    />
+                    <input type="text" className={inputClass} />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] flex items-center gap-3">
-                        <Calendar size={12} className="text-brand-blue" /> {t.date}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                        <Calendar size={13} className="text-brand-yellow" /> {t.date}
                       </label>
                       <input
                         required
                         type="date"
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-brand-blue outline-none transition-all font-serif italic text-lg [color-scheme:dark]"
+                        className={cn(inputClass, '[color-scheme:dark]')}
                       />
                     </div>
-                    <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] flex items-center gap-3">
-                        <Clock size={12} className="text-brand-blue" /> {t.time}
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                        <Clock size={13} className="text-brand-yellow" /> {t.time}
                       </label>
                       <input
                         required
                         type="time"
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-brand-blue outline-none transition-all font-serif italic text-lg [color-scheme:dark]"
+                        className={cn(inputClass, '[color-scheme:dark]')}
                       />
                     </div>
                   </div>
 
-                  <div className="pt-10">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+                      <MessageSquare size={13} className="text-brand-yellow" /> {t.notes}
+                    </label>
+                    <textarea
+                      rows={3}
+                      className={cn(inputClass, 'resize-none')}
+                      placeholder={lang === 'he' ? 'משהו שכדאי שנדע?' : 'Anything we should know?'}
+                    />
+                  </div>
+
+                  <div className="pt-4">
                     <button
                       type="submit"
-                      className="group w-full py-6 bg-brand-blue text-brand-navy font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-2xl shadow-brand-blue/10 flex items-center justify-center gap-4"
+                      className="group w-full py-4 md:py-5 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-2xl shadow-brand-yellow/20 rounded-md flex items-center justify-center gap-3"
                     >
                       {t.submit}
-                      <Send className={lang === 'he' ? 'rotate-180' : ''} size={16} />
+                      <Send className={lang === 'he' ? 'rotate-180' : ''} size={16} strokeWidth={2.5} />
                     </button>
                   </div>
 
-                  <div className="flex flex-wrap gap-8 pt-8 border-t border-white/5">
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-6 pt-6 border-t border-white/10">
                     {[t.trust1, t.trust2, t.trust3].map((text, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-[9px] font-bold text-white/20 uppercase tracking-widest">
-                        <div className="w-1 h-1 bg-brand-blue rounded-full" />
+                      <div key={idx} className="flex items-center gap-2 text-xs text-white/55">
+                        <CheckCircle2 className="text-brand-yellow" size={13} strokeWidth={2.5} />
                         {text}
                       </div>
                     ))}
@@ -112,22 +115,22 @@ export default function Booking({ lang }: BookingProps) {
                 </form>
               ) : (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center text-center py-20"
+                  className="flex flex-col items-center justify-center text-center py-16"
                 >
-                  <div className="w-20 h-20 bg-brand-blue/10 rounded-full flex items-center justify-center mb-10">
-                    <CheckCircle2 className="text-brand-blue" size={40} />
+                  <div className="w-20 h-20 bg-brand-yellow/15 rounded-full flex items-center justify-center mb-8">
+                    <CheckCircle2 className="text-brand-yellow" size={40} strokeWidth={2} />
                   </div>
-                  <h3 className="text-3xl font-display font-bold text-white mb-6 uppercase tracking-tight">
+                  <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
                     {t.success.split('.')[0]}
                   </h3>
-                  <p className="text-xl text-slate-400 leading-relaxed max-w-md font-serif italic">
+                  <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-md">
                     {t.success.split('.').slice(1).join('.')}
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="mt-12 text-white border-b border-white/20 font-bold text-xs uppercase tracking-widest hover:border-brand-blue hover:text-brand-blue transition-all"
+                    className="mt-10 text-white/80 border-b border-white/30 pb-1 font-semibold text-sm uppercase tracking-wider hover:text-brand-yellow hover:border-brand-yellow transition-all"
                   >
                     {lang === 'he' ? 'הזמן תור נוסף' : 'Book another session'}
                   </button>
@@ -136,18 +139,25 @@ export default function Booking({ lang }: BookingProps) {
             </div>
 
             {/* Visual Side */}
-            <div className="hidden lg:block lg:w-1/3 relative overflow-hidden bg-slate-900">
+            <div className="hidden lg:block lg:col-span-2 relative overflow-hidden bg-brand-navy-deep">
               <img
-                src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1200&q=80"
-                alt="Brothers at work"
-                className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-1000"
+                src="/clean.png"
+                alt={lang === 'he' ? 'רכב נקי לאחר הטיפול' : 'A car after the wash'}
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-brand-navy/40 mix-blend-overlay" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="p-12 text-center border border-white/10 backdrop-blur-md bg-brand-navy/20">
-                   <p className="text-[10px] text-white/40 uppercase tracking-[0.4em] mb-4">Starting At</p>
-                   <p className="text-7xl font-display font-black text-brand-blue italic tracking-tighter">15 ₪</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-10">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-6xl md:text-7xl font-display font-black text-brand-yellow tracking-tighter leading-none">
+                    15
+                  </span>
+                  <span className="text-2xl md:text-3xl font-display font-bold text-white/90">₪</span>
                 </div>
+                <p className="text-white/80 text-base leading-snug max-w-[260px]">
+                  {lang === 'he'
+                    ? 'רחיצה ידנית מלאה. כולל כל מה שכתוב למעלה.'
+                    : 'Full hand wash. Everything in the list above.'}
+                </p>
               </div>
             </div>
           </div>

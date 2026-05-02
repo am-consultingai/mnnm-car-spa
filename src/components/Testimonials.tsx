@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { Language, translations } from '../translations';
 import { Star, Quote } from 'lucide-react';
-import { cn } from '../lib/utils';
 
 interface TestimonialsProps {
   lang: Language;
@@ -12,47 +11,60 @@ export default function Testimonials({ lang }: TestimonialsProps) {
 
   return (
     <section id="love" className="section-padding bg-brand-navy relative overflow-hidden border-b border-white/5">
-      {/* Grid Background */}
-      <div className="absolute inset-0 z-0 grid-bg opacity-5 pointer-events-none" />
+      <div className="absolute inset-0 grid-bg opacity-[0.04] pointer-events-none" />
 
-      <div className="container mx-auto px-10 relative z-10">
-        <div className="max-w-5xl mb-24 text-center md:text-left">
-          <span className="text-brand-blue text-xs font-bold tracking-[0.4em] uppercase mb-6 block">
-            The Reviews
-          </span>
-          <h2 className="text-5xl md:text-8xl font-display font-black text-white uppercase tracking-tighter leading-none mb-12">
+      <div className="container mx-auto px-6 md:px-10 relative z-10">
+        <div className="max-w-4xl mb-16 md:mb-20">
+          {/* Five-star anchor */}
+          <div className="flex items-center gap-1 mb-6">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={20}
+                className="fill-brand-yellow text-brand-yellow"
+                strokeWidth={0}
+              />
+            ))}
+            <span className="ml-3 text-white/60 text-sm font-medium">
+              {lang === 'he' ? '5.0 · לקוחות אמיתיים' : '5.0 · real customers'}
+            </span>
+          </div>
+
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tight leading-[0.95]">
             {t.title}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 bg-brand-navy/50 backdrop-blur-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {t.items.map((item, idx) => (
-            <motion.div
+            <motion.figure
               key={idx}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className={cn(
-                "p-12 transition-colors hover:bg-white/5 min-h-[400px] flex flex-col justify-between",
-                idx < t.items.length - 1 ? "lg:border-r border-b lg:border-b-0 border-white/10" : ""
-              )}
+              className="bg-white/[0.04] border border-white/10 rounded-lg p-8 md:p-10 flex flex-col justify-between min-h-[320px] hover:border-brand-yellow/30 transition-all"
             >
-              <Quote className="text-brand-blue/20 w-16 h-16 mb-10" />
-              <p className="text-2xl md:text-3xl text-white/90 font-serif italic mb-12 leading-tight">
-                "{item.text}"
-              </p>
-              <div className="flex items-center gap-6 pt-10 border-t border-white/10">
+              <div>
+                <Quote className="text-brand-yellow/40 w-10 h-10 mb-6" strokeWidth={1.5} />
+                <blockquote className="text-lg md:text-xl text-white/90 leading-relaxed mb-8">
+                  {item.text}
+                </blockquote>
+              </div>
+              <figcaption className="flex items-center gap-3 pt-6 border-t border-white/10">
+                <div className="w-10 h-10 rounded-full bg-brand-yellow/15 flex items-center justify-center text-brand-yellow font-bold text-sm">
+                  {item.author.split(',')[0].trim()[0]}
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-white font-bold uppercase tracking-widest text-xs mb-1">
+                  <span className="text-white font-semibold text-sm">
                     {item.author.split(',')[0]}
                   </span>
-                  <span className="text-brand-blue text-[10px] font-bold uppercase tracking-widest opacity-60">
-                    {item.author.split(',')[1] || 'Verified Customer'}
+                  <span className="text-white/50 text-xs">
+                    {item.author.split(',')[1] || (lang === 'he' ? 'לקוח/ה מאומת/ת' : 'verified customer')}
                   </span>
                 </div>
-              </div>
-            </motion.div>
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
       </div>
