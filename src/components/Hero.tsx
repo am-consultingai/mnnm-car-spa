@@ -18,10 +18,10 @@ export default function Hero({ lang }: HeroProps) {
         loop
         muted
         playsInline
-        poster="/clean.png"
+        poster={`${import.meta.env.BASE_URL}clean.png`}
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/car_wash.mp4" type="video/mp4" />
+        <source src={`${import.meta.env.BASE_URL}car_wash.mp4`} type="video/mp4" />
       </video>
 
       {/* Cinematic overlay: dark at top + bottom for legibility, video shows through the middle */}

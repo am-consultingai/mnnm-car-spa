@@ -32,7 +32,7 @@ export default function Team({ lang }: TeamProps) {
             className="lg:col-span-5 relative rounded-lg overflow-hidden bg-brand-navy-deep border border-white/10 group"
           >
             <img
-              src="/brothers.jpg"
+              src={`${import.meta.env.BASE_URL}brothers.jpg`}
               alt={lang === 'he' ? 'מתן, נטע ונועם — האחים שמאחורי מננם' : 'Matan, Neta and Noam — the brothers behind MNNM'}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />

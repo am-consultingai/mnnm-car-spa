@@ -141,7 +141,7 @@ export default function Booking({ lang }: BookingProps) {
             {/* Visual Side */}
             <div className="hidden lg:block lg:col-span-2 relative overflow-hidden bg-brand-navy-deep">
               <img
-                src="/clean.png"
+                src={`${import.meta.env.BASE_URL}clean.png`}
                 alt={lang === 'he' ? 'רכב נקי לאחר הטיפול' : 'A car after the wash'}
                 className="w-full h-full object-cover"
               />

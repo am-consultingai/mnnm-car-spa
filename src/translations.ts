@@ -85,17 +85,14 @@ export const translations = {
         {
           name: 'מתן',
           desc: 'האח הגדול. אחראי על המים, על המוזיקה, ועל זה שכולם מגיעים בזמן.',
-          image: '/matan.png',
         },
         {
           name: 'נועם',
           desc: 'המוח של הציוד. אם זה מבריק — נועם בחר את החומר.',
-          image: '/noam.png',
         },
         {
           name: 'נטע',
           desc: 'לא נחה עד שהרכב נראה טוב יותר משיצא מהסוכנות.',
-          image: '/neta.png',
         },
       ],
     },
@@ -240,17 +237,14 @@ export const translations = {
         {
           name: 'Matan',
           desc: 'The big brother. In charge of the water, the playlist, and making sure everyone shows up on time.',
-          image: '/matan.png',
         },
         {
           name: 'Noam',
           desc: 'The gear nerd. If it shines, Noam picked the product.',
-          image: '/noam.png',
         },
         {
           name: 'Neta',
           desc: "Doesn't rest until the car looks better than it did at the dealership.",
-          image: '/neta.png',
         },
       ],
     },
