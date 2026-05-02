@@ -12,21 +12,30 @@ export default function Hero({ lang }: HeroProps) {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-brand-navy">
-      {/* Background video */}
+      {/* Background video — let it actually be seen */}
       <video
         autoPlay
         loop
         muted
         playsInline
         poster="/clean.png"
-        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        className="absolute inset-0 w-full h-full object-cover"
       >
         <source src="/car_wash.mp4" type="video/mp4" />
       </video>
 
-      {/* Gradient overlay so text stays legible */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/90 via-brand-navy/70 to-brand-navy/95" />
-      <div className="absolute inset-0 grid-bg opacity-[0.07] pointer-events-none" />
+      {/* Cinematic overlay: dark at top + bottom for legibility, video shows through the middle */}
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/85 via-brand-navy/30 to-brand-navy/95" />
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/70 via-transparent to-brand-navy/40" />
+      <div className="absolute inset-0 grid-bg opacity-[0.05] pointer-events-none" />
+
+      {/* Subtle live-video badge */}
+      <div className="absolute top-24 right-6 md:top-28 md:right-10 z-10 flex items-center gap-2 bg-brand-navy/60 backdrop-blur-sm border border-white/15 rounded-full px-3 py-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-brand-yellow animate-pulse shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
+        <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">
+          {lang === 'he' ? 'בעבודה' : 'In the bay'}
+        </span>
+      </div>
 
       {/* Content */}
       <div className="container mx-auto px-6 md:px-10 relative z-10 pt-32 pb-24">
