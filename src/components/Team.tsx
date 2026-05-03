@@ -40,7 +40,7 @@ export default function Team({ lang }: TeamProps) {
           />
 
           {/* Soft gradient top — fades the photo into the bio panel */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-brand-navy via-brand-navy/85 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-brand-navy/70 via-brand-navy/40 to-transparent" />
 
           {/* Bio overlay strip — pinned to the top */}
           <figcaption className="absolute inset-x-0 top-0 px-4 sm:px-6 md:px-8 pt-6 md:pt-8 pb-12">
@@ -52,7 +52,7 @@ export default function Team({ lang }: TeamProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.12 }}
                   viewport={{ once: true }}
-                  className="bg-brand-navy/70 backdrop-blur-md border border-white/10 rounded-lg p-5 md:p-6"
+                  className="bg-brand-navy/35 backdrop-blur-sm border border-white/15 rounded-lg p-5 md:p-6"
                 >
                   <h3 className="text-3xl md:text-4xl font-display font-black text-brand-yellow tracking-tight leading-none mb-3">
                     {member.name}

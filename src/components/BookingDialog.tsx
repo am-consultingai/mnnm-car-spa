@@ -25,7 +25,7 @@ interface BookingDialogProps {
 type Step = 'form' | 'submitting' | 'success' | 'error';
 
 const inputClass =
-  'w-full bg-white/[0.04] border border-white/10 rounded-md px-4 py-2 text-white placeholder-white/30 focus:border-brand-yellow focus:bg-white/[0.07] outline-none transition-all text-base disabled:opacity-50';
+  'w-full bg-white/[0.04] border border-white/10 rounded-md px-4 py-1.5 text-white placeholder-white/30 focus:border-brand-yellow focus:bg-white/[0.07] outline-none transition-all text-base disabled:opacity-50';
 
 export default function BookingDialog({
   lang,
@@ -157,9 +157,9 @@ export default function BookingDialog({
       aria-labelledby="booking-dialog-title"
     >
       <div className="bg-brand-navy border border-white/10 rounded-xl text-white shadow-2xl">
-        <div className="flex items-start justify-between px-6 md:px-8 pt-4 md:pt-6 pb-2">
+        <div className="flex items-start justify-between px-6 md:px-8 pt-3 md:pt-5 pb-1">
           <div>
-            <span className="eyebrow text-brand-yellow text-[11px] font-bold uppercase mb-1 inline-block">
+            <span className="eyebrow text-brand-yellow text-[11px] font-bold uppercase mb-0.5 inline-block">
               {t.eyebrow}
             </span>
             <h2 id="booking-dialog-title" className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight leading-tight">
@@ -176,7 +176,7 @@ export default function BookingDialog({
           </button>
         </div>
 
-        <div className="px-6 md:px-8 pb-4 md:pb-6">
+        <div className="px-6 md:px-8 pb-3 md:pb-5">
           {step === 'success' ? (
             <SuccessPanel
               lang={lang}
@@ -197,7 +197,7 @@ export default function BookingDialog({
           ) : !hasSlots ? (
             <p className="py-8 text-center text-white/70 text-sm">{t.noSlots}</p>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-2">
               <Field label={t.name} icon={<User size={13} className="text-brand-yellow" />}>
                 <input
                   required
@@ -238,7 +238,7 @@ export default function BookingDialog({
                   {!day ? (
                     <p className="text-sm text-white/45 italic leading-snug">{t.pickDayFirst}</p>
                   ) : (
-                    <div className="flex flex-col gap-1.5 max-h-56 overflow-y-auto pr-1">
+                    <div className="flex flex-col gap-1 max-h-48 overflow-y-auto pr-1">
                       {timesForDay.map((tm) => {
                         const active = tm === time;
                         return (
@@ -248,7 +248,7 @@ export default function BookingDialog({
                             disabled={step === 'submitting'}
                             onClick={() => setTime(tm)}
                             className={cn(
-                              'w-full px-4 py-1.5 rounded-md font-mono text-sm font-bold tracking-wide transition-all border text-center',
+                              'w-full px-4 py-1 rounded-md font-mono text-sm font-bold tracking-wide transition-all border text-center',
                               active
                                 ? 'bg-brand-yellow text-brand-navy border-brand-yellow shadow-md shadow-brand-yellow/20'
                                 : 'bg-white/[0.04] text-white border-white/15 hover:border-brand-yellow/60 hover:bg-white/[0.07]',
@@ -288,7 +288,7 @@ export default function BookingDialog({
                 type="submit"
                 disabled={step === 'submitting'}
                 className={cn(
-                  'group w-full py-3 md:py-3.5 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-2xl shadow-brand-yellow/20 rounded-md flex items-center justify-center gap-3',
+                  'group w-full py-2.5 md:py-3 bg-brand-yellow text-brand-navy font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-2xl shadow-brand-yellow/20 rounded-md flex items-center justify-center gap-3',
                   step === 'submitting' && 'opacity-80 cursor-wait'
                 )}
               >
@@ -305,7 +305,7 @@ export default function BookingDialog({
                 )}
               </button>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-1.5 sm:gap-5 pt-3 border-t border-white/10">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-1 sm:gap-5 pt-2 border-t border-white/10">
                 {[t.trust1, t.trust2, t.trust3].map((text, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-[11px] text-white/55">
                     <CheckCircle2 className="text-brand-yellow" size={12} strokeWidth={2.5} />
@@ -407,13 +407,13 @@ function CalendarPicker({
 
       <div className="grid grid-cols-7 gap-0.5 mb-1 text-center">
         {weekdayLabels.map((wd, i) => (
-          <span key={i} className="text-[10px] font-bold text-white/40 uppercase w-8">{wd}</span>
+          <span key={i} className="text-[10px] font-bold text-white/40 uppercase w-7">{wd}</span>
         ))}
       </div>
 
       <div className="grid grid-cols-7 gap-0.5">
         {cells.map((cell, i) => {
-          if (!cell) return <span key={i} aria-hidden className="w-8 h-8" />;
+          if (!cell) return <span key={i} aria-hidden className="w-7 h-7" />;
           const isAvailable = availableDays.has(cell.iso);
           const isSelected = cell.iso === selectedDay;
           const isToday = cell.iso === todayIso;
@@ -425,7 +425,7 @@ function CalendarPicker({
               disabled={!isAvailable || disabled}
               aria-pressed={isSelected}
               className={cn(
-                'w-8 h-8 flex items-center justify-center rounded text-sm font-bold transition relative',
+                'w-7 h-7 flex items-center justify-center rounded text-sm font-bold transition relative',
                 isSelected && 'bg-brand-yellow text-brand-navy shadow-md shadow-brand-yellow/30',
                 !isSelected && isAvailable && 'bg-brand-yellow/15 text-brand-yellow border border-brand-yellow/40 hover:bg-brand-yellow/25 cursor-pointer',
                 !isAvailable && 'text-white/25 cursor-not-allowed'
@@ -453,7 +453,7 @@ function pad2(n: number): string {
 
 function Field({ label, icon, children }: { label: string; icon: ReactNode; children: ReactNode }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-0.5">
       <label className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
         {icon} {label}
       </label>
