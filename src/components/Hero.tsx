@@ -22,7 +22,7 @@ export default function Hero({ lang, price, currency, onBook }: HeroProps) {
         muted
         playsInline
         poster={`${import.meta.env.BASE_URL}founders_wash_poster.jpg`}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:object-center"
       >
         <source src={`${import.meta.env.BASE_URL}founders_wash.mp4`} type="video/mp4" />
       </video>
