@@ -198,7 +198,8 @@ export default function BookingDialog({
             <p className="py-8 text-center text-white/70 text-sm">{t.noSlots}</p>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-2">
-              <Field label={t.name} icon={<User size={13} className="text-brand-yellow" />}>
+              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 items-center">
+                <InlineLabel icon={<User size={13} className="text-brand-yellow" />}>{t.name}</InlineLabel>
                 <input
                   required
                   type="text"
@@ -208,9 +209,8 @@ export default function BookingDialog({
                   disabled={step === 'submitting'}
                   autoComplete="name"
                 />
-              </Field>
 
-              <Field label={t.phone} icon={<Phone size={13} className="text-brand-yellow" />}>
+                <InlineLabel icon={<Phone size={13} className="text-brand-yellow" />}>{t.phone}</InlineLabel>
                 <input
                   required
                   type="tel"
@@ -221,9 +221,9 @@ export default function BookingDialog({
                   disabled={step === 'submitting'}
                   autoComplete="tel"
                 />
-              </Field>
+              </div>
 
-              <div className="grid sm:grid-cols-[auto_1fr] gap-3 items-start">
+              <div className="grid grid-cols-[auto_1fr] gap-3 items-start">
                 <Field label={t.day} icon={<Calendar size={13} className="text-brand-yellow" />}>
                   <CalendarPicker
                     lang={lang}
@@ -265,18 +265,21 @@ export default function BookingDialog({
                 </Field>
               </div>
 
-              <Field label={t.email} icon={<Mail size={13} className="text-brand-yellow" />}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={inputClass}
-                  dir="ltr"
-                  disabled={step === 'submitting'}
-                  autoComplete="email"
-                />
-                <p className="text-[11px] text-white/45 leading-snug">{t.emailHint}</p>
-              </Field>
+              <div className="grid grid-cols-[auto_1fr] gap-x-3 items-center">
+                <InlineLabel icon={<Mail size={13} className="text-brand-yellow" />}>{t.email}</InlineLabel>
+                <div>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={inputClass}
+                    dir="ltr"
+                    disabled={step === 'submitting'}
+                    autoComplete="email"
+                  />
+                  <p className="text-[11px] text-white/45 leading-snug mt-0.5">{t.emailHint}</p>
+                </div>
+              </div>
 
               {errorMessage && step !== 'submitting' && (
                 <p className="text-sm text-red-300/90 bg-red-500/10 border border-red-400/20 rounded-md px-3 py-2">
@@ -459,6 +462,14 @@ function Field({ label, icon, children }: { label: string; icon: ReactNode; chil
       </label>
       {children}
     </div>
+  );
+}
+
+function InlineLabel({ icon, children }: { icon: ReactNode; children: ReactNode }) {
+  return (
+    <span className="text-xs font-bold text-white/70 uppercase tracking-wider flex items-center gap-2 whitespace-nowrap">
+      {icon} {children}
+    </span>
   );
 }
 
