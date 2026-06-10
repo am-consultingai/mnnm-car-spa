@@ -5,6 +5,7 @@ import { Language, translations } from '../translations';
 import { cn } from '../lib/utils';
 import {
   BookingConfig,
+  filterFutureSlots,
   groupSlotsByDay,
   isBookingConfigured,
   joinSlot,
@@ -47,7 +48,11 @@ export default function BookingDialog({
   const [day, setDay] = useState('');
   const [time, setTime] = useState('');
 
-  const groupedDays = useMemo(() => (config ? groupSlotsByDay(config.slots) : []), [config]);
+  // Only offer slots that are still in the future; the sheet may list past dates.
+  const groupedDays = useMemo(
+    () => (config ? groupSlotsByDay(filterFutureSlots(config.slots)) : []),
+    [config]
+  );
   const availableDaysSet = useMemo(() => new Set(groupedDays.map((g) => g.day)), [groupedDays]);
   const timesForDay = useMemo(() => groupedDays.find((g) => g.day === day)?.times ?? [], [groupedDays, day]);
 
@@ -227,6 +232,7 @@ export default function BookingDialog({
                 <Field label={t.day} icon={<Calendar size={13} className="text-brand-yellow" />}>
                   <CalendarPicker
                     lang={lang}
+                    open={open}
                     availableDays={availableDaysSet}
                     selectedDay={day}
                     onSelect={(d) => { setDay(d); setTime(''); }}
@@ -326,12 +332,14 @@ export default function BookingDialog({
 
 function CalendarPicker({
   lang,
+  open,
   availableDays,
   selectedDay,
   onSelect,
   disabled,
 }: {
   lang: Language;
+  open: boolean;
   availableDays: Set<string>;
   selectedDay: string;
   onSelect: (day: string) => void;
@@ -341,21 +349,15 @@ function CalendarPicker({
   const locale = lang === 'he' ? 'he-IL' : 'en-IL';
   const todayIso = useMemo(() => isoDay(new Date()), []);
 
-  // Initial month: month of earliest available day, or today if none.
+  // Always open on the current month so the user lands on today.
   const initial = useMemo(() => {
-    const sorted = Array.from(availableDays).sort();
-    if (sorted.length > 0) {
-      const [y, m] = sorted[0].split('-').map(Number);
-      return { year: y, month: m - 1 };
-    }
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() };
-  }, [availableDays]);
+  }, []);
 
   const [view, setView] = useState(initial);
-  // If availability changes (e.g. config refresh) and the current view has no
-  // slots and the selected month is not where the selection lives, drift forward.
-  useEffect(() => { setView(initial); }, [initial]);
+  // Snap back to the current month whenever the dialog reopens.
+  useEffect(() => { if (open) setView(initial); }, [open, initial]);
 
   const monthLabel = useMemo(() => {
     const d = new Date(view.year, view.month, 1);

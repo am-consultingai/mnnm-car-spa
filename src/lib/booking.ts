@@ -69,6 +69,22 @@ export function joinSlot(day: string, time: string): string {
   return `${day}T${time}`;
 }
 
+/** Parse "YYYY-MM-DDTHH:MM" into a local Date, or null if malformed. */
+export function parseSlot(slot: string): Date | null {
+  const m = slot.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);
+  if (!m) return null;
+  const [, y, mo, d, h, mi] = m.map(Number);
+  return new Date(y, mo - 1, d, h, mi);
+}
+
+/** Drop slots whose datetime is in the past relative to `now`. */
+export function filterFutureSlots(slots: string[], now: Date = new Date()): string[] {
+  return slots.filter((s) => {
+    const d = parseSlot(s);
+    return d !== null && d.getTime() >= now.getTime();
+  });
+}
+
 /** Friendly day label, RTL-aware. Falls back to ISO if Intl chokes. */
 export function formatDayLabel(day: string, lang: 'he' | 'en'): string {
   try {
